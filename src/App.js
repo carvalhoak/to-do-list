@@ -14,46 +14,58 @@ function App(props) {
 
   return (
     <div className="App">
-      <h1>To-Do List</h1>
+      <h1 className='Title'>To-Do List</h1>
+
+    <div className='addTask'>
 
       <input
+        className='inputBar'
         type='text'
         name='todo'
+        placeholder='Digite a tarefa desejada'
         onChange={(e) => setTask(e.target.value)}
         autoComplete="off"
         value={task}
       />
 
-      <button onClick={() =>{
+      <button className='inputButtons' onClick={() =>{
         setTask("");
         setList([{
           id: list.length,
           text: task,
         }, ...list]);
       }}>Adicionar</button>
-      
-    <ul>
-      {list.map((task, id) => (
-        <li key={id}>
 
-          <div>
+      <button className='inputButtons' onClick={() =>{
+        setList([])
+      }}>Deletar Todos</button>
+      
+    </div>
+
+    <ul className='lista'>
+      {list.map((task, id) => (
+        <li className='listItem' key={id}>
+
+          <div className='box_text'>
           <input 
+          className='checkbox'
           type={'checkbox'}
           name='checkboxTask'
           id={list.length}
           />
         
           {task.text}
+
           </div>
           
 
-          <div>
-            <button onClick={() => {
+          <div className='editDeleteButtons'>
+            <button className='inputButtons' onClick={() => {
                 cutTask(id, list);
                 setDeleted([]);
               }}>Deletar</button> 
 
-              <button onClick={() => {
+              <button className='inputButtons' onClick={() => {
                 cutTask(id, list);
                 setDeleted([]);
                 task = newTask;
@@ -71,12 +83,13 @@ function App(props) {
       ))}
     </ul>
 
-    <div>
-      <p>Digite que nova tarefa deseja inserir e para
-         subistituir a tarefa desejada aperte o botão *Editar*
-         da tarefa respectiva
+    <div className='editSection'>
+      <p className='paragraph'>Digite a tarefa que deseja inserir e para
+         subistituir a tarefa desejada, aperte o botão [Editar]
+         da respectiva tarefa
       </p>
       <input
+          className='inputBar'
           id="id" 
           name='editInput'
           type={'text'} 
