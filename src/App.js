@@ -1,20 +1,16 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 function cutTask(id, list){
   list.splice(id,1);
 }
 
-function App() {
+function App(props) {
 
-  let index = 0;
   let [task, setTask] = useState("");
+  let [newTask, setNewTask] = useState("");
   let [list, setList] = useState([]);
   let [, setDeleted] = useState([]);
-
-  useEffect(() => {
-    setList([])
-  }, [])
 
   return (
     <div className="App">
@@ -31,7 +27,7 @@ function App() {
       <button onClick={() =>{
         setTask("");
         setList([{
-          id: index++,
+          id: list.length,
           text: task,
         }, ...list]);
       }}>Adicionar</button>
@@ -40,21 +36,56 @@ function App() {
       {list.map((task, id) => (
         <li key={id}>
 
+          <div>
           <input 
           type={'checkbox'}
-          id={index}
+          name='checkboxTask'
+          id={list.length}
           />
-
+        
           {task.text}
+          </div>
+          
 
-          <button onClick={() => {
-              cutTask(id, list);
-              setDeleted([]);
-            }
-            }>Deletar</button>
+          <div>
+            <button onClick={() => {
+                cutTask(id, list);
+                setDeleted([]);
+              }}>Deletar</button> 
+
+              <button onClick={() => {
+                cutTask(id, list);
+                setDeleted([]);
+                task = newTask;
+                setNewTask("");
+                setList([{
+                  id: list.length,
+                  text: task,
+                }, ...list]);
+              }}>Editar</button>
+
+          </div>
+                    
         </li>
+        
       ))}
     </ul>
+
+    <div>
+      <p>Digite que nova tarefa deseja inserir e para
+         subistituir a tarefa desejada aperte o botão *Editar*
+         da tarefa respectiva
+      </p>
+      <input
+          id="id" 
+          name='editInput'
+          type={'text'} 
+          placeholder='Digite sua nova tarefa'
+          onChange={(e) => setNewTask(e.target.value)}
+          value={newTask}
+      />
+    </div>
+    
     </div>
     
   );
